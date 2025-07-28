@@ -1,14 +1,22 @@
+// First we imported the static data from the frontend itself for rendering as products
 // import { products } from "../data/products"
+
 import Product from "../components/Product"
-import { useEffect,useState } from "react"
+
+// Now we here are importing the static data from backend through API and rendering it as products replacing the previous one
+import axios from "axios"
+import { useState, useEffect } from "react"
 
 function HomePage() {
-  cosnt [products, setProducts] = useState([])
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-   
+    const fetchProducts = async () => {
+      const {data} = await axios.get("/api/products")
+      setProducts(data)
+    }
+    fetchProducts()
   }, [])
-  
 
   return (
     // For mobile screen resloution grid-col is 1 for tablets grid-col is 2 and for laptop and computer the grid-col is 4 (it will show the products grid depending on screen size)

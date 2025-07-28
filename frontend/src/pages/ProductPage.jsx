@@ -1,25 +1,38 @@
-import React from 'react'
-import { products } from '../data/products'
+// First we imported the static data from the frontend itself for rendering 
+// import { products } from '../data/products'
+
 import { Link, useParams } from 'react-router-dom'
+import { useState,useEffect } from 'react'
+import axios from 'axios'
 // import { useCreateProductMutation, useCreateReviewMutation, useGetProductDetailsQuery } from '../slices/productsApiSlice'
 // import Spinner from '../components/Spinner'
 // import { toast } from 'react-toastify'
 // import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
-// import { useState } from 'react'
 // import { addToCart } from '../slices/cartSlice'
 
 function ProductPage() {
+
+// First we imported the static data from the frontend -- for this we used the below function to render
+//   const product = products.find(product => product.id == id)
+
+// Now we here are importing the static data from backend through API and used below hook to render
+  const [product,setProducts] = useState([])
   const {id} = useParams()
-  const product = products.find(product => product.id == id)
-  console.log(product)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const {data} = await axios.get(`/api/products/${id}`)
+      setProducts(data)
+    }
+    fetchProducts()
+  }, [id])
+  
 
     // const { data: product, isLoading, error, refetch } = useGetProductDetailsQuery(productId)
     // const [createReview, { isLoading: LoadingCreateReview }] = useCreateReviewMutation()
     // const [qty, setQty] = useState(1)
     // const [userComment, setUserComment] = useState("")
     // const [userRating, setUserRating] = useState(5)
-
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
 

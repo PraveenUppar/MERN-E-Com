@@ -1,12 +1,16 @@
 import express from "express"
 import dotenv from "dotenv"
+import cors from "cors"
 
 import {products} from "./data/products.js"
 
+
 dotenv.config()
+const PORT = process.env.PORT
 
 const app = express()
-const PORT = process.env.PORT
+app.use(cors())
+
 
 // Test the server is running 
 app.get("/",(req,res) => {
