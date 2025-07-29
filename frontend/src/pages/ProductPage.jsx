@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice.js";
 import Spinner from "../components/Spinner";
-// import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 // import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 // import { addToCart } from '../slices/cartSlice'
