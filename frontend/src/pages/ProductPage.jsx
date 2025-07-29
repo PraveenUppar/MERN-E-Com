@@ -1,14 +1,14 @@
 // First we imported the static data from the frontend itself for rendering
 // import { products } from '../data/products'
-
+import React from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { useState } from "react";
 import { useGetProductDetailsQuery } from "../slices/productsApiSlice.js";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-// import { useDispatch } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
-// import { addToCart } from '../slices/cartSlice'
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addToCart } from "../slices/cartSlice";
 
 // import { useState, useEffect } from "react";
 // import axios from "axios";
@@ -39,16 +39,16 @@ function ProductPage() {
     error,
   } = useGetProductDetailsQuery(productId);
   // const [createReview, { isLoading: LoadingCreateReview }] = useCreateReviewMutation()
-  // const [qty, setQty] = useState(1)
+  const [qty, setQty] = useState(1);
   // const [userComment, setUserComment] = useState("")
   // const [userRating, setUserRating] = useState(5)
-  // const dispatch = useDispatch()
-  // const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // const addtoCartHandler = () => {
-  //     dispatch(addToCart({ ...product, qty }))
-  //     navigate('/cart')
-  // }
+  const addtoCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   // const handleCreateReview = async e => {
   //     e.preventDefault()
@@ -103,7 +103,7 @@ function ProductPage() {
               <select
                 id="quantity"
                 className="bg-white border border-gray-300 p-2 rounded-md mt-2"
-                // onChange={e => setQty(e.target.value)}
+                onChange={(e) => setQty(e.target.value)}
               >
                 {[...Array(product.countInStock).keys()].map((num) => (
                   <option key={num + 1} value={num + 1}>
@@ -114,7 +114,7 @@ function ProductPage() {
             </div>
             <button
               className="bg-yellow-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-yellow-600"
-              // onClick={addtoCartHandler}
+              onClick={addtoCartHandler}
             >
               Add to Cart
             </button>
