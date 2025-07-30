@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import passport from "./utils/passport.js";
 
 import connectDB from "./config/db.js";
 
@@ -10,10 +11,23 @@ const PORT = process.env.PORT;
 
 const app = express();
 app.use(cors());
-
+passport(app);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
+    methods: "GET, POST, PATCH, DELETE, PUT",
+    credentials: true,
+  })
+);
 
 // Test the server is running
 app.get("/", (req, res) => {

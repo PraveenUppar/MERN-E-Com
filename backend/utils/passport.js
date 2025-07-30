@@ -1,8 +1,8 @@
-import session from "express-session"
-import passport from "passport"
-import { Strategy as GoogleStategy } from "passport-google-oauth20"
+import session from "express-session";
+import passport from "passport";
+import { Strategy as GoogleStategy } from "passport-google-oauth20";
 
-const passportUtil = app => {
+const passportUtil = (app) => {
   app.use(
     session({
       secret: process.env.SESSION_SECRET,
@@ -12,9 +12,9 @@ const passportUtil = app => {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
       },
     })
-  )
-  app.use(passport.initialize())
-  app.use(passport.session())
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   passport.use(
     new GoogleStategy(
@@ -25,17 +25,19 @@ const passportUtil = app => {
         scope: ["profile", "email"],
       },
       (accessToken, refreshToken, profile, callback) => {
-        callback(null, profile)
+        callback(null, profile);
       }
     )
-  )
+  );
   passport.serializeUser((user, done) => {
-    done(null, user)
-  })
+    done(null, user);
+  });
 
   passport.deserializeUser((user, done) => {
-    done(null, user)
-  })
-}
+    done(null, user);
+  });
+};
 
-export default passportUtil
+export default passportUtil;
+
+// npm i passport-google-oauth20 express-session passport axios
