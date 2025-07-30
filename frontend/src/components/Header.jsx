@@ -10,19 +10,18 @@ import { useSelector, useDispatch } from "react-redux";
 function Header() {
   // The default state is false when the screen resolution is small then the state is set to True which will render the isMobileMenuOpen code when clicked shows the content
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
-  //   const navigate = useNavigate();
-  //   const dispatch = useDispatch();
-  //   const { keyword: urlKeyword } = useParams();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const { keyword: urlKeyword } = useParams();
 
   //   const [logoutApi] = useLogoutMutation();
 
-  //   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  //   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
   //   const [keyword, setKeyword] = useState(urlKeyword || "");
 
   const { cartItems } = useSelector((state) => state.cart);
-  //   const { userInfo } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
 
   //   const handleLogout = async () => {
   //     try {
@@ -35,84 +34,84 @@ function Header() {
   //     }
   //   };
 
-  //   const renderProfileButton = () => {
-  //     return (
-  //       <>
-  //         <button
-  //           onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-  //           className="text-white flex items-center"
-  //         >
-  //           <FiUser className="mr-1" />
-  //           {userInfo?.name}
-  //           {isProfileMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
-  //         </button>
-  //         <ul
-  //           className={`absolute ${
-  //             isProfileMenuOpen ? "block" : "hidden"
-  //           } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
-  //         >
-  //           <li>
-  //             <Link to="/profile">
-  //               <FiUser className="mr-1" />
-  //               Profile
-  //             </Link>
-  //           </li>
-  //           <li>
-  //             <Link onClick={handleLogout}>
-  //               <FiLogOut className="mr-1" />
-  //               Logout
-  //             </Link>
-  //           </li>
-  //         </ul>
-  //       </>
-  //     );
-  //   };
-  //   const renderAdminButton = () => {
-  //     return (
-  //       <>
-  //         <button
-  //           onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
-  //           className="text-white flex items-center"
-  //         >
-  //           <FiUser className="mr-1" />
-  //           Admin
-  //           {isAdminMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
-  //         </button>
-  //         <ul
-  //           className={`absolute ${
-  //             isAdminMenuOpen ? "block" : "hidden"
-  //           } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
-  //         >
-  //           <li>
-  //             <Link to="/admin/users">Users</Link>
-  //           </li>
-  //           <li>
-  //             <Link to="/admin/products">Products</Link>
-  //           </li>
-  //           <li>
-  //             <Link to="/admin/orders">Orders</Link>
-  //           </li>
-  //         </ul>
-  //       </>
-  //     );
-  //   };
+  const renderProfileButton = () => {
+    return (
+      <>
+        <button
+          onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+          className="text-white flex items-center"
+        >
+          <FiUser className="mr-1" />
+          {userInfo?.name}
+          {isProfileMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
+        </button>
+        <ul
+          className={`absolute ${
+            isProfileMenuOpen ? "block" : "hidden"
+          } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
+        >
+          <li>
+            <Link to="/profile">
+              <FiUser className="mr-1" />
+              Profile
+            </Link>
+          </li>
+          <li>
+            <Link onClick={handleLogout}>
+              <FiLogOut className="mr-1" />
+              Logout
+            </Link>
+          </li>
+        </ul>
+      </>
+    );
+  };
+  const renderAdminButton = () => {
+    return (
+      <>
+        <button
+          onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
+          className="text-white flex items-center"
+        >
+          <FiUser className="mr-1" />
+          Admin
+          {isAdminMenuOpen ? <FaCaretUp /> : <FaCaretDown />}
+        </button>
+        <ul
+          className={`absolute ${
+            isAdminMenuOpen ? "block" : "hidden"
+          } bg-gray-800 p-2 mt-2 space-y-2 text-white border rounded-md`}
+        >
+          <li>
+            <Link to="/admin/users">Users</Link>
+          </li>
+          <li>
+            <Link to="/admin/products">Products</Link>
+          </li>
+          <li>
+            <Link to="/admin/orders">Orders</Link>
+          </li>
+        </ul>
+      </>
+    );
+  };
 
-  //   const renderSignInButton = () => (
-  //     <Link className="flex items-center" to="/login">
-  //       <FiLogIn className="mr-1 text-white" />
-  //       <button className="text-white">Sign In</button>
-  //     </Link>
-  //   );
+  const renderSignInButton = () => (
+    <Link className="flex items-center" to="/login">
+      <FiLogIn className="mr-1 text-white" />
+      <button className="text-white">Sign In</button>
+    </Link>
+  );
 
-  //   const handleSearch = (e) => {
-  //     e.preventDefault();
-  //     if (keyword) {
-  //       navigate(`/search/${keyword.trim()}`);
-  //       setKeyword("");
-  //     } else {
-  //       navigate("/");
-  //     }
-  //   };
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (keyword) {
+      navigate(`/search/${keyword.trim()}`);
+      setKeyword("");
+    } else {
+      navigate("/");
+    }
+  };
 
   return (
     <nav className="bg-gray-800 p-5">
@@ -147,13 +146,13 @@ function Header() {
             </span>
           </Link>
 
-          {/* {userInfo && <div className="relative group">
-                        {renderProfileButton()}
-                    </div>}
-                    {userInfo?.isAdmin && <div className="relative group ">
-                        {renderAdminButton()}
-                    </div>}
-                    {!userInfo && renderSignInButton()} */}
+          {userInfo && (
+            <div className="relative group">{renderProfileButton()}</div>
+          )}
+          {userInfo?.isAdmin && (
+            <div className="relative group ">{renderAdminButton()}</div>
+          )}
+          {!userInfo && renderSignInButton()}
         </div>
         {/* Third child div for button visible only in mobile resolution and when clicked will render the below code and changing the state to TRUE*/}
         <div className="sm:hidden">
@@ -185,13 +184,13 @@ function Header() {
                 {cartItems.length}
               </span>
             </Link>
-            {/* {userInfo && <div className="relative group ">
-                            {renderProfileButton()}
-                        </div>}
-                        {userInfo?.isAdmin && <div className="relative group ">
-                            {renderAdminButton()}
-                        </div>}
-                        {!userInfo && renderSignInButton()} */}
+            {userInfo && (
+              <div className="relative group ">{renderProfileButton()}</div>
+            )}
+            {userInfo?.isAdmin && (
+              <div className="relative group ">{renderAdminButton()}</div>
+            )}
+            {!userInfo && renderSignInButton()}
           </div>
         </div>
       )}
