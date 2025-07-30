@@ -83,9 +83,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
-
   const user = await User.findOne({ email });
-
   if (!user) {
     res.status(404);
     throw new Error("User Not Found");
@@ -93,18 +91,14 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
   const resetToken = user.createPasswordResetToken();
   user.save();
-
   const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
-
   const message = `Forgot Password? Click on this this link to reset your Password: ${resetUrl}`;
-
   try {
     await sendEmail({
       email: user.email,
       subject: "Your Password reset token. (valid for 10mins)",
       message,
     });
-
     res.status(200).json({
       message: "Token Sent to email!",
     });
@@ -113,7 +107,6 @@ const forgotPassword = asyncHandler(async (req, res) => {
     user.passwordResetExpires = undefined;
     user.save();
     console.log(error);
-
     res.status(500).json({
       status: "error",
       message:
