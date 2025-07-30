@@ -3,9 +3,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiLogOut, FiLogIn } from "react-icons/fi";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-// import { toast } from "react-toastify";
-// import { useLogoutMutation } from "../slices/userApiSlice";
-// import { logout } from "../slices/userSlice";
+import { toast } from "react-toastify";
+import { useLogoutMutation } from "../slices/userApiSlice";
+import { logout } from "../slices/userSlice";
 
 function Header() {
   // The default state is false when the screen resolution is small then the state is set to True which will render the isMobileMenuOpen code when clicked shows the content
@@ -13,26 +13,26 @@ function Header() {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { keyword: urlKeyword } = useParams();
+  const { keyword: urlKeyword } = useParams();
 
-  //   const [logoutApi] = useLogoutMutation();
+  const [logoutApi] = useLogoutMutation();
 
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
-  //   const [keyword, setKeyword] = useState(urlKeyword || "");
+  const [keyword, setKeyword] = useState(urlKeyword || "");
 
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
 
-  //   const handleLogout = async () => {
-  //     try {
-  //       await logoutApi().unwrap();
-  //       dispatch(logout());
-  //       navigate("/login");
-  //       toast.success("logged Out Successfully");
-  //     } catch (error) {
-  //       toast.error(error?.data?.message || error?.error);
-  //     }
-  //   };
+  const handleLogout = async () => {
+    try {
+      await logoutApi().unwrap();
+      dispatch(logout());
+      navigate("/login");
+      toast.success("logged Out Successfully");
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error);
+    }
+  };
 
   const renderProfileButton = () => {
     return (
@@ -126,12 +126,12 @@ function Header() {
             type="text"
             placeholder="Search"
             className="ml-4 p-2 rounded-md bg-gray-700 text-white hidden sm:block"
-            // value={keyword}
-            // onChange={e => setKeyword(e.target.value)}
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
           />
           <button
             className="bg-blue-500 text-white py-2 px-4 rounded-md hidden sm:block ml-2"
-            // onClick={handleSearch}
+            onClick={handleSearch}
           >
             Search
           </button>
