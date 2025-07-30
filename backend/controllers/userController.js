@@ -1,7 +1,7 @@
 import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
-// import sendEmail from "../utils/sendEmail.js";
+import sendEmail from "../utils/sendEmail.js";
 import crypto from "crypto";
 
 const loginUser = asyncHandler(async (req, res) => {
