@@ -38,8 +38,11 @@ import productRoutes from "./routes/productRoutes.js";
 // All the endpoints for the products route
 app.use("/api/products/", productRoutes);
 
-import authRoutes from "./routes/authRoutes.js";
-app.use("/auth", authRoutes);
+import userRoutes from "./routes/userRoutes.js";
+app.use("/api/users", userRoutes);
+
+// import authRoutes from "./routes/authRoutes.js";
+// app.use("/auth", authRoutes);
 
 app.listen(PORT, () => {
   console.log("Server running in port", PORT);
