@@ -58,6 +58,9 @@ app.use("/api/users", userRoutes);
 import authRoutes from "./routes/authRoutes.js";
 app.use("/auth", authRoutes);
 
+import orderRoutes from "./routes/orderRoutes.js";
+app.use("/api/orders", orderRoutes);
+
 app.listen(PORT, () => {
   console.log("Server running in port", PORT);
   connectDB();
