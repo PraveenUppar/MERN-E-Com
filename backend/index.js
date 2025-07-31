@@ -73,6 +73,7 @@ stripe(app);
 // app.use(notFound);
 // app.use(errorHandler);
 
+// The logic for connecting to DB (connectDB()) is in the db.js of config folder
 import connectDB from "./config/db.js";
 app.listen(PORT, () => {
   console.log("Server running in port", PORT);

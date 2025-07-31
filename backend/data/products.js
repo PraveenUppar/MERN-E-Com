@@ -1,5 +1,6 @@
 const products = [
   {
+    id: 1,
     name: "Airpods Wireless Bluetooth Headphones",
     image: "/images/airpods.jpg",
     description:
@@ -12,6 +13,7 @@ const products = [
     numReviews: 0,
   },
   {
+    id: 2,
     name: "Smartphone X1",
     image: "/images/smartphone-x1.jpg",
     description:
@@ -71,6 +73,6 @@ const products = [
     rating: 4.2,
     numReviews: 6,
   },
-]
+];
 
-export default products
+export default products;
