@@ -61,6 +61,12 @@ app.use("/auth", authRoutes);
 import orderRoutes from "./routes/orderRoutes.js";
 app.use("/api/orders", orderRoutes);
 
+import stripe from "./utils/stripe.js";
+stripe(app);
+
+// app.use(notFound);
+// app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log("Server running in port", PORT);
   connectDB();
