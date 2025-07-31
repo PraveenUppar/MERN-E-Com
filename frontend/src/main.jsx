@@ -17,6 +17,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ShippingPage from "./pages/ShippingPage.jsx";
+import PaymentPage from "./pages/PaymentPage.jsx";
 import store from "./store.js";
 
 const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/shipping" element={<ShippingPage />} />
+      <Route path="/payment" element={<PaymentPage />} />
     </Route>
   )
 );
