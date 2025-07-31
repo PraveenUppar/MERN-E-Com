@@ -1,0 +1,18 @@
+There's a widely-used and well-structured way to plan this, and it's called REST (Representational State Transfer). 
+REST is a set of architectural principles for designing web services. While you don't have to follow it strictly, it provides a great framework for organizing your routes logically.
+
+In a RESTful design, you think of your application in terms of resources. A resource is any "thing" in your application that your users can interact with. 
+For an e-commerce project, your resources would be things like:
+
+- Products
+- Users
+- Carts
+- Orders
+- Categories
+- Reviews
+
+Once you've identified your resources, you then need to think about the actions you can perform on those resources. The four basic actions are often mapped to the standard HTTP methods:
+- GET: Retrieve a resource or a list of resources.
+- POST: Create a new resource.
+- PUT / PATCH: Update an existing resource.
+- DELETE: Delete a resource.
