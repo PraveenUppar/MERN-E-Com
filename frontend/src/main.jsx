@@ -19,6 +19,7 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import ShippingPage from "./pages/ShippingPage.jsx";
 import PaymentPage from "./pages/PaymentPage.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import PlaceOrderPage from "./pages/PlaceOrderPage.jsx";
 import store from "./store.js";
 
 const router = createBrowserRouter(
@@ -30,14 +31,13 @@ const router = createBrowserRouter(
       <Route path="/login" element={<LoginPage />} />
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
       <Route path="/register" element={<RegisterPage />} />
-
       <Route path="" element={<PrivateRoute />}>
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
-        {/* <Route path="/place-order" element={<PlaceOrderScreen />} />
-        <Route path="/order/:id" element={<OrderScreen />} />
-        <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/success-screen" element={<SuccessScreen />} /> */}
+        <Route path="/place-order" element={<PlaceOrderPage />} />
+        {/* <Route path="/order/:id" element={<OrderScreen />} /> */}
+        {/* <Route path="/profile" element={<ProfileScreen />} /> */}
+        {/* <Route path="/success-screen" element={<SuccessScreen />} /> */}
       </Route>
     </Route>
   )
