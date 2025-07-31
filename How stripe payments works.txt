@@ -1,0 +1,20 @@
+Step 1: The Client-Side (Frontend)
+
+- Your user enters their credit card information into a payment form on your website.
+- You use the Stripe.js library and your Publishable Key to securely collect this information.
+- The Stripe.js library sends the credit card information directly to Stripe's servers. This data never touches your own server.
+- Stripe returns a unique, temporary token or a "Payment Method" object to your frontend. This token represents the user's payment details without exposing the sensitive card number.
+
+Step 2: The Backend-Side (Your Server)
+
+- The frontend sends the temporary token/Payment Method ID it received from Stripe to your backend server.
+- Your backend server receives this token and now has the secure identifier for the payment.
+- Your backend uses the stripe Node.js library (or a similar library for your programming language) and your Secret Key to make a request to the Stripe API.
+- This request is to create a charge or a PaymentIntent. In this request, you'll include the amount, currency, and the payment token you received from the frontend.
+- The Stripe API receives this authenticated request from your backend, uses the secret key to verify that it's a legitimate request from your account, and then processes the payment using the payment token.
+
+Step 3: Post-Transaction (Stripe & Your Server)
+
+- Stripe handles all the complexities of communicating with the credit card networks and banks.
+- The Stripe API returns a response to your backend, indicating whether the payment was successful or failed.
+- Your backend then handles the response. If the payment was successful, you might update your database to reflect the successful order, send a confirmation email, or provide access to the product/service. If it failed, you might inform the frontend so the user can try again.
