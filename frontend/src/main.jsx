@@ -22,6 +22,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import PlaceOrderPage from "./pages/PlaceOrderPage.jsx";
 import OrderPage from "./pages/OrderPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import SuccessPage from "./pages/SuccessPage.jsx";
 import store from "./store.js";
 
 const router = createBrowserRouter(
@@ -39,7 +40,7 @@ const router = createBrowserRouter(
         <Route path="/place-order" element={<PlaceOrderPage />} />
         <Route path="/order/:id" element={<OrderPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {/* <Route path="/success-screen" element={<SuccessScreen />} /> */}
+        <Route path="/success-screen" element={<SuccessPage />} />
       </Route>
     </Route>
   )
