@@ -50,7 +50,7 @@ app.get("/", (res) => {
 import productRoutes from "./routes/productRoutes.js";
 app.use("/api/products/", productRoutes);
 
-// User api routes for login and register
+// User api routes
 import userRoutes from "./routes/userRoutes.js";
 app.use("/api/users", userRoutes);
 

@@ -1,0 +1,12 @@
+The generateToken function is designed to handle the core task of creating and securely storing an authentication token for a user.
+
+Think of it as a two-step process:
+
+Token Creation: 
+- The function first generates a JSON Web Token (JWT). This token is like a digital ID card for the user. 
+- It contains the user's unique ID and is "signed" with a secret key. This signature is a security measure that ensures the token hasn't been tampered with. 
+- It's also given an expiration date, so it's only valid for a limited time (in this case, one day).
+
+Token Storage: 
+- After creating the token, the function doesn't just return it. Instead, it places the token directly into a cookie on the user's web browser. 
+- The function sets special security flags on this cookie (httpOnly, secure, sameSite) to ensure the token is protected from common attacks and is only sent with authorized requests.

@@ -1,0 +1,16 @@
+The bcrypt is a widely-used password hashing function. Its primary purpose is to securely store user passwords.
+
+Why it's used for passwords: 
+- Instead of storing plain-text passwords in a database (which is a massive security risk), developers use a hashing algorithm to transform the password into a long, irreversible string of characters (the "hash").
+- Irreversibility: You can't get the original password back from the hash.
+- Salt: bcrypt automatically generates a "salt" for each password. The salt is a random string that is combined with the password before hashing. 
+        This prevents "rainbow table" attacks, where an attacker pre-computes hashes for common passwords.
+- Cost Factor: bcrypt is intentionally slow. This "cost factor" makes it computationally expensive for an attacker to perform a brute-force attack (trying millions of passwords per second).
+
+
+
+The crypto module provides a wide range of cryptographic functionality, including hashing, encryption.
+
+- Generating unique tokens: Creating secret tokens for password reset links, email verification, or API keys.
+- Session IDs: Generating secure, random strings to identify user sessions.
+- Hashing data (other than passwords): Creating hashes of non-password data for integrity checks or as unique identifiers.

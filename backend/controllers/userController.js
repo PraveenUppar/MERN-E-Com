@@ -1,12 +1,24 @@
+// importing user from the database and its methods
 import User from "../models/user.model.js";
+// Middleware for Express that simplifies error handling in asynchronous routes. (npm i express-async-handler)
 import asyncHandler from "express-async-handler";
+// This function generates a JWT token and sets it as a cookie in the response.
 import generateToken from "../utils/generateToken.js";
+//
 import sendEmail from "../utils/sendEmail.js";
+//
 import crypto from "crypto";
 
+// ********* User route logic *****************
+
+// User login function
 const loginUser = asyncHandler(async (req, res) => {
+  //  Destructure the email and password from the request body
   const { email, password } = req.body;
+  // Check if the user email is present in the database
   const user = await User.findOne({ email });
+  // we will match the user email first once we find the email of the user then move to password (to compare the user password to the database hashed password)
+  // if the user email is in database is true and the user password is true then generate a jwt token (send the user_id as the parameter for generateToken function) and send a response to the user
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
     res.json({
@@ -21,6 +33,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+// User Registration function
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -48,6 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Update user profile function
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.body._id);
 
@@ -67,6 +81,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// User logout function
 const logoutUser = asyncHandler(async (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
@@ -81,6 +96,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   });
 });
 
+// User forgot password function
 const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
@@ -115,6 +131,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   }
 });
 
+// User reset password function
 const resetPassword = asyncHandler(async (req, res) => {
   const hashedToken = crypto
     .createHash("sha256")
@@ -148,11 +165,15 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+// ********* Admin route logic *****************
+
+// Admin functions to get all the users
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
 
+// Admin function to update user details by ID
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
@@ -170,6 +191,7 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+// Admin function to get user by ID
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
@@ -180,6 +202,7 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
+// Admin function to delete user by ID
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 

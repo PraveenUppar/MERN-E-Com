@@ -1,0 +1,10 @@
+This library is a middleware for Express that simplifies error handling in asynchronous routes.
+
+ - In Express, route handlers often perform asynchronous operations, such as making database queries, calling external APIs, or reading files. 
+ - These operations return a Promise. Without a special mechanism, if an asynchronous operation inside a route handler fails (i.e., the Promise is rejected), 
+ - The Express error handler will not catch the error, and the server might crash.
+
+
+ - It acts as a wrapper function that takes an asynchronous route handler as an argument and returns a new function. 
+ - This new function automatically handles the Promise returned by the original handler. 
+ - If the Promise is rejected, the wrapper function will automatically call next(error), passing the error to the Express error-handling middleware. 
