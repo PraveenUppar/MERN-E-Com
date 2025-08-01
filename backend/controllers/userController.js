@@ -76,6 +76,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     // Only updates the user.password property if a new password is provided in the request body (req.body.password is truthy).
     // This is a good practice, as you wouldn't want to overwrite a hashed password with an empty string.
     if (req.body.password) user.password = req.body.password;
+    // if
     await user.save();
     res.status(200);
     res.json({
@@ -106,13 +107,15 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 // User forgot password function
 const forgotPassword = asyncHandler(async (req, res) => {
+  //  Destructure email from the request body
   const { email } = req.body;
+  // Check if the user email is already present(findOne is a mongoose method to find) in the database
   const user = await User.findOne({ email });
   if (!user) {
     res.status(404);
     throw new Error("User Not Found");
   }
-
+  // if the user email is present in the database then genereate a reset token
   const resetToken = user.createPasswordResetToken();
   user.save();
   const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
@@ -145,26 +148,21 @@ const resetPassword = asyncHandler(async (req, res) => {
     .createHash("sha256")
     .update(req.params.resetToken)
     .digest("hex");
-
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
-
   if (!user) {
     res.status(400).json({
       status: "fail",
       message: "Token is invalid or has expired",
     });
   }
-
   user.password = req.body.password;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
   user.save();
-
   generateToken(res, user._id);
-
   res.json({
     _id: user._id,
     name: user.name,

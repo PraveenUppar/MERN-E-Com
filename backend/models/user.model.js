@@ -52,15 +52,14 @@ userSchema.pre("save", async function (next) {
 
 //
 userSchema.methods.createPasswordResetToken = function () {
+  // generate a cryptographically strong, random string of 32 bytes and converts the 32 random bytes into a hexadecimal string
+  //  This is the original, unhashed token that will be sent to the user.
   const resetToken = crypto.randomBytes(32).toString("hex");
-
   this.passwordResetToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
+    .createHash("sha256") // SHA-256 is a fast, secure, one-way hashing function.
+    .update(resetToken) // The original, unhashed token is fed into the hashing function.
     .digest("hex");
-
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000; //10mins
-
   return resetToken;
 };
 
