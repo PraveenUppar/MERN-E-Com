@@ -1,15 +1,15 @@
 import express from "express";
 import {
-  deleteUser,
-  forgotPassword,
-  getUserById,
-  getUsers,
   loginUser,
   logoutUser,
   registerUser,
   resetPassword,
   updateUser,
   updateUserProfile,
+  deleteUser,
+  forgotPassword,
+  getUserById,
+  getUsers,
 } from "../controllers/userController.js";
 
 import { protect, admin } from "../middleware/authMiddleware.js";
@@ -18,19 +18,22 @@ const router = express.Router();
 
 router.route("/").get(protect, admin, getUsers);
 
+// ********* User routes *****************
+
 // user auth routes
-router.route("/register").post(registerUser);
-router.route("/login").post(loginUser);
-router.route("/logout").get(logoutUser);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.get("/logout", logoutUser);
 
 // user profile update route
-router.route("/update").put(updateUserProfile);
+router.put("/update", updateUserProfile);
 
 // password reset routes
-router.route("/forgot-password").post(forgotPassword);
-router.route("/reset-password/:resetToken").patch(resetPassword);
+router.post("/forgot-password", forgotPassword);
+router.patch("/reset-password/:resetToken", resetPassword);
 
-// admin routes
+// ********* Admin routes *****************
+
 router
   .route("/:id")
   .put(protect, admin, updateUser)

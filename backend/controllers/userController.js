@@ -6,7 +6,7 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 //
 import sendEmail from "../utils/sendEmail.js";
-//
+// The crypto module provides a wide range of cryptographic functionality, including hashing, encryption.
 import crypto from "crypto";
 
 // ********* User route logic *****************
@@ -35,17 +35,18 @@ const loginUser = asyncHandler(async (req, res) => {
 
 // User Registration function
 const registerUser = asyncHandler(async (req, res) => {
+  //  Destructure the name, email and password from the request body
   const { name, email, password } = req.body;
-
+  // Check if the user email is already present(findOne is a mongoose method to find) in the database
   const userExists = await User.findOne({ email });
-
+  // if the user email is already present in the database then throw an error
   if (userExists) {
     res.status(400);
     throw new Error("User already Exists");
   }
-
+  // if the user is not in the database then create(User.crete is a mongoose method to create) a new user with the name, email and password
   const user = await User.create({ name, email, password });
-
+  // if user sends the required params then generate a jwt token
   if (user) {
     generateToken(res, user._id);
     res.status(201);
@@ -57,20 +58,27 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error("Invalid User Credentials");
+    throw new Error("Invalid Credentials");
   }
 });
 
 // Update user profile function
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.body._id);
-
+  //  Destructure id from the request body
+  const { _id } = req.body;
+  // Check if the user id is already present(findById is a mongoose method to find) in the database
+  const user = await User.findById(_id);
+  // if the use id is in the database
   if (user) {
+    // If req.body.name exists and has a value, use it to update user.name. Otherwise, keep the existing value of user.name
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    // Only updates the user.password property if a new password is provided in the request body (req.body.password is truthy).
+    // This is a good practice, as you wouldn't want to overwrite a hashed password with an empty string.
     if (req.body.password) user.password = req.body.password;
     await user.save();
-    res.status(200).json({
+    res.status(200);
+    res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
