@@ -68,20 +68,21 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 // ************** Admin order logic *****************
 
-//
+// protect and admin middleare are checked
+// retrieves all order documents from the database. It then uses Mongoose's .populate() method to include the name and ID of the user associated with each order,
 const getOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find().populate("user", "id name");
   res.send(orders);
 });
 
+// This function fetches a specific user order based on the provided user order ID in the request parameters and sends it as a JSON response
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
+  // if order is present in the database then set delivered as true with date and save the changes
   if (order) {
     order.isDelivered = true;
     order.deliveredAt = Date.now();
-
     const updatedOrder = await order.save();
-
     res.json(updatedOrder);
   }
   res.status(404);
