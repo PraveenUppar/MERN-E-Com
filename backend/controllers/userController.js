@@ -182,7 +182,7 @@ const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
-// ********* Admin route logic *****************
+// ************ Admin route logic *****************
 
 // Admin functions to get all the users
 const getUsers = asyncHandler(async (req, res) => {

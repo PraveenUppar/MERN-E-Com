@@ -1,0 +1,16 @@
+The protect middleware serves as an authentication gatekeeper for your API routes:
+
+- It checks for a JWT in the request's cookies.
+- If no token is found, it immediately denies access.
+- If a token is present, it verifies its authenticity and expiration using a secret key.
+- As jwt token contains the user_id which is hashed with the secret key once decoded we get the user_id which can be for verification
+- Upon successful verification, it fetches the corresponding user's data from the database.
+- It then attaches the user's data to the request object (req.user), making the user's identity available to all subsequent functions.
+
+The admin middleware is an essential tool for implementing role-based access control. It works as a gatekeeper for routes that should only be accessible to administrators.
+
+- It must be used after an authentication middleware that attaches the authenticated user's data to the request object.
+- It performs a simple, fast check of the isAdmin property.
+- If the user has admin privileges, it allows the request to proceed to the route.
+- If the user does not have admin privileges, it denies access by throwing an Unauthorized error.
+
