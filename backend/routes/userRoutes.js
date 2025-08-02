@@ -35,7 +35,6 @@ router.patch("/reset-password/:resetToken", resetPassword);
 
 // ********* Admin routes *****************
 
-// onced check with the protected route (checks if the user is present in the db and roles it has)
 router
   .route("/:id")
   .put(protect, admin, updateUser)

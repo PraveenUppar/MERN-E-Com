@@ -190,26 +190,9 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
-// Admin function to update user details by ID
-const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
-
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.isAdmin = Boolean(req.body.isAdmin);
-
-    await user.save();
-
-    res.json({ message: "User updated Successfully" });
-  } else {
-    res.status(404);
-    throw new Error("USer Not Found");
-  }
-});
-
 // Admin function to get user by ID
 const getUserById = asyncHandler(async (req, res) => {
+  // get individual user to update name,email and isAdmin by user_id
   const user = await User.findById(req.params.id);
   if (user) {
     res.status(200).json(user);
@@ -219,11 +202,31 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
+// Admin function to update user details by ID
+const updateUser = asyncHandler(async (req, res) => {
+  // get individual user to update name,email and isAdmin by user_id
+  const user = await User.findById(req.params.id);
+  // if the user is present in the database based on user_id
+  // send updated user name,email and isAdmin to database to save the updated values if any of the values is empty then no change
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin);
+    await user.save();
+    res.json({ message: "User updated Successfully" });
+  } else {
+    res.status(404);
+    throw new Error("USer Not Found");
+  }
+});
+
 // Admin function to delete user by ID
 const deleteUser = asyncHandler(async (req, res) => {
+  // get individual user to update name,email and isAdmin by user_id
   const user = await User.findById(req.params.id);
-
+  // if the user is present in the database based on user_id
   if (user) {
+    // Mongoose delete method based on user_id which will sent as req.params.id
     await User.deleteOne({ _id: req.params.id });
     res.status(204).json({ message: "User Deleted Successfully" });
   } else {
