@@ -4,7 +4,7 @@ import User from "../models/user.model.js";
 import asyncHandler from "express-async-handler";
 // This function generates a JWT token and sets it as a cookie in the response.
 import generateToken from "../utils/generateToken.js";
-//
+// This function sends an email to the user.
 import sendEmail from "../utils/sendEmail.js";
 // The crypto module provides a wide range of cryptographic functionality, including hashing, encryption.
 import crypto from "crypto";
@@ -118,6 +118,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
   // if the user email is present in the database then genereate a reset token
   const resetToken = user.createPasswordResetToken();
   user.save();
+  // the resetURL is sent to the user email with the original resest token as the paraetes in the URL
   const resetUrl = `${req.protocol}://localhost:3000/reset-password/${resetToken}`;
   const message = `Forgot Password? Click on this this link to reset your Password: ${resetUrl}`;
   try {
@@ -129,6 +130,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
     res.status(200).json({
       message: "Token Sent to email!",
     });
+    // if the reset token and expiry is not defined (i.e null) it will throw an error
   } catch (error) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
@@ -143,25 +145,34 @@ const forgotPassword = asyncHandler(async (req, res) => {
 });
 
 // User reset password function
+// Once the user recieves a URL of the reset password the user can set a new password and make a request to the backend
+// As the URL contains the original reset token it is destructed from the params
+// The original reset token is checked with the hashed reset token in the backend if a user exists with the same token then the password is reset
 const resetPassword = asyncHandler(async (req, res) => {
+  //  It performs the same hashing operation (using SHA-256) as when the token was first generated and saved to the database.
   const hashedToken = crypto
     .createHash("sha256")
     .update(req.params.resetToken)
     .digest("hex");
+  // The stored hashed token on the user document must match the hashed token from the request.checks if the token is still valid and has not expired.
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
+  // If the user is not present then it will throw an error
   if (!user) {
     res.status(400).json({
       status: "fail",
       message: "Token is invalid or has expired",
     });
   }
+  // if the user is preset in the database then the new password is set and the reset token ans expiry are nullified
   user.password = req.body.password;
   user.passwordResetToken = undefined;
   user.passwordResetExpires = undefined;
+  // pre-save hook that automatically hashes this new password using a strong algorithm like bcrypt before it's saved
   user.save();
+  // Once the password is set the jwt token is created for the user for futher login and auth
   generateToken(res, user._id);
   res.json({
     _id: user._id,

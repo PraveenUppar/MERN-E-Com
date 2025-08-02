@@ -43,14 +43,16 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 //
 userSchema.pre("save", async function (next) {
+  //  Mongoose method checks if the password field on the document has been modified since it was last retrieved from the database.
   if (!this.isModified("password")) {
     next();
   }
+  // The bcrypt library is used to generate a secure random "salt" for the password.
   const salt = await bcrypt.genSalt(10);
+  // It takes the plain-text password (this.password) and the newly generated salt and produces a secure, irreversible hash.
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-//
 userSchema.methods.createPasswordResetToken = function () {
   // generate a cryptographically strong, random string of 32 bytes and converts the 32 random bytes into a hexadecimal string
   //  This is the original, unhashed token that will be sent to the user.
