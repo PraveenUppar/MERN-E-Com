@@ -1,0 +1,26 @@
+Think of your application's data flow as a system with four main components:
+
+The API Slice (apiSlice.js): 
+- This is the central hub. It doesn't do much on its own, but it holds the universal settings for all your API calls, like the base URL and the caching mechanism (tagTypes).
+
+Feature-Specific API Slices (userApiSlice.js): 
+- These are the workers. They are built on top of the base apiSlice. Each one is responsible for a specific part of your application (e.g., users, products, orders). 
+- They define all the actual API endpoints (queries and mutations) for that feature.
+
+The Redux Store (store.js): 
+- This is the brain. It's where all your application's state lives. It connects the API slices and any other Redux slices you create.
+
+The User Slice (userSlice.js): 
+- This is for local, client-side state. It's a standard Redux Toolkit slice that manages state that isn't directly from an API call, like the user's logged-in status or authentication token, and stores it in localStorage.
+
+Your React Components: 
+- These are the hands and eyes. They use the hooks provided by the API slices and the user slice to interact with the data and display it to the user.
+
+
+The store.js file acts as the central point of connection for everything.
+
+- Your React application is wrapped in <Provider store={store}>.
+- store is given all the reducers for your state: api, cart, and user.
+- When a component uses a hook like useLoginMutation(), the RTK Query middleware is triggered. It makes the API call and updates the api part of the state.
+- When a component dispatches dispatch(setCredentials(data)), the userReducer handles the action and updates the user part of the state.
+- When a component dispatches an action to add an item to the cart, the cartReducer handles it and updates the cart part of the state.

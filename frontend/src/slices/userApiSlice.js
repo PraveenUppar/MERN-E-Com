@@ -1,6 +1,10 @@
 import { apiSlice } from "./apiSlice";
 import { USERS_URL } from "../constants";
 
+// apiSlice.injectEndpoints: This function allows you to add endpoints to a pre-existing API slice.
+// builder.mutation: This is used for API calls that modify data on the server.
+// query function often takes an argument (like data or id) that contains the information needed to make the request.
+// builder.query: This is used for API calls that fetch data (GET requests).
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({

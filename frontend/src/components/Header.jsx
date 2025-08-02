@@ -7,25 +7,36 @@ import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 // Importing toast for notifications
 import { toast } from "react-toastify";
 // Importing necessary hooks and functions from Redux
+// useSelector is a hook to extract data from the Redux store
+// useDispatch is used to dispatch actions to the Redux store
 import { useSelector, useDispatch } from "react-redux";
+// ?????????????????????????????????????????????????????????????
 import { useLogoutMutation } from "../slices/userApiSlice";
+//  When called, it creates an action object that will be dispatched to the Redux store to update the user's state, marking them as logged out.
 import { logout } from "../slices/userSlice";
 
 function Header() {
+  // State variables to manage the visibility of mobile menu, profile menu, and admin menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { keyword: urlKeyword } = useParams();
-
-  const [logoutApi] = useLogoutMutation();
-
   const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+
+  // grabs the value of the keyword parameter from the URL and stores it in a new constant called urlKeyword.
+  // It uses useState to create a local state variable for the search bar's input field.
+  const { keyword: urlKeyword } = useParams();
   const [keyword, setKeyword] = useState(urlKeyword || "");
 
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
 
+  // Redirect user to new route
+  const navigate = useNavigate();
+  // useDispatch is used to dispatch actions to the Redux store
+  const dispatch = useDispatch();
+
+  //
+  const [logoutApi] = useLogoutMutation();
+  //
   const handleLogout = async () => {
     try {
       await logoutApi().unwrap();
