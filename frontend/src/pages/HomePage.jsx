@@ -1,6 +1,3 @@
-// First we imported the static data from the frontend itself for rendering as products
-// import { products } from "../data/products"
-
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import Spinner from "../components/Spinner";
@@ -10,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../slices/userSlice";
 import { useParams } from "react-router-dom";
 // import Paginate from "../components/Paginate";
-// Now we here are importing the static data from backend through API and rendering it as products replacing the previous one
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -47,12 +43,12 @@ function HomePage() {
     getUser();
   }, []);
 
-  // const { keyword, pageNumber } = useParams();
+  const { keyword, pageNumber } = useParams();
 
-  // const { data, isLoading, error } = useGetProductsQuery({
-  //   keyword,
-  //   pageNumber,
-  // });
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+  });
 
   return (
     // For mobile screen resloution grid-col is 1 for tablets grid-col is 2 and for laptop and computer the grid-col is 4 (it will show the products grid depending on screen size)

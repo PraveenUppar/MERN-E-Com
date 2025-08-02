@@ -1,47 +1,30 @@
-// First we imported the static data from the frontend itself for rendering
-// import { products } from '../data/products'
-import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
-import { useGetProductDetailsQuery } from "../slices/productsApiSlice.js";
+import {
+  useCreateProductMutation,
+  useCreateReviewMutation,
+  useGetProductDetailsQuery,
+} from "../slices/productsApiSlice";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { addToCart } from "../slices/cartSlice";
 
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-
-function ProductPage() {
-  // First we imported the static data from the frontend -- for this we used the below function to render
-  //   const product = products.find(product => product.id == id)
-
-  // Now we here are importing the static data from backend through API and used below hook to render
-  // After installing react-redux we dont need the below as redux will manage our state
-  // Axios is much better than redux
-
-  //   const [product,setProducts] = useState([])
-  //   const {id} = useParams()
-  //   useEffect(() => {
-  //     const fetchProducts = async () => {
-  //       const {data} = await axios.get(`/api/products/${id}`)
-  //       setProducts(data)
-  //     }
-  //     fetchProducts()
-  //   }, [id])
-
+export default function ProductScreen() {
   const { id: productId } = useParams();
-  // const { data: product, isLoading, error } = useGetProductsQuery(product)
   const {
     data: product,
     isLoading,
     error,
+    refetch,
   } = useGetProductDetailsQuery(productId);
-  // const [createReview, { isLoading: LoadingCreateReview }] = useCreateReviewMutation()
+  const [createReview, { isLoading: LoadingCreateReview }] =
+    useCreateReviewMutation();
   const [qty, setQty] = useState(1);
-  // const [userComment, setUserComment] = useState("")
-  // const [userRating, setUserRating] = useState(5)
+  const [userComment, setUserComment] = useState("");
+  const [userRating, setUserRating] = useState(5);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -50,18 +33,21 @@ function ProductPage() {
     navigate("/cart");
   };
 
-  // const handleCreateReview = async e => {
-  //     e.preventDefault()
-  //     try {
-  //         const res = await createReview({ productId, rating: userRating, comment: userComment }).unwrap()
-  //         refetch()
-  //         toast.success(res.message)
-  //         setUserComment("")
-
-  //     } catch (error) {
-  //         toast.error(error?.data?.message || error?.error)
-  //     }
-  // }
+  const handleCreateReview = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await createReview({
+        productId,
+        rating: userRating,
+        comment: userComment,
+      }).unwrap();
+      refetch();
+      toast.success(res.message);
+      setUserComment("");
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error);
+    }
+  };
 
   return (
     <div className="container mx-auto mt-8 p-4">
@@ -121,7 +107,6 @@ function ProductPage() {
           </div>
         </div>
       )}
-
       <div className="mt-8">
         <h2 className="text-xl font-semibold">Customer Reviews</h2>
         <div className="mt-4">
@@ -154,8 +139,8 @@ function ProductPage() {
               id="userReview"
               className="bg-white border border-gray-300 p-2 rounded-md mt-2 w-full"
               rows="4"
-              // value={userComment}
-              // onChange={e => setUserComment(e.target.value)}
+              value={userComment}
+              onChange={(e) => setUserComment(e.target.value)}
               placeholder="Write your review here..."
             />
           </div>
@@ -166,8 +151,8 @@ function ProductPage() {
             <select
               id="rating"
               className="bg-white border border-gray-300 p-2 rounded-md mt-2"
-              // value={userRating}
-              // onChange={e => setUserRating(e.target.value)}
+              value={userRating}
+              onChange={(e) => setUserRating(e.target.value)}
             >
               {[1, 2, 3, 4, 5].map((r) => (
                 <option key={r} value={r}>
@@ -178,7 +163,7 @@ function ProductPage() {
           </div>
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600"
-            // onClick={handleCreateReview}
+            onClick={handleCreateReview}
           >
             Submit Review
           </button>
@@ -197,5 +182,3 @@ function ProductPage() {
     </div>
   );
 }
-
-export default ProductPage;

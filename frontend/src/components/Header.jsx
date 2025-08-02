@@ -1,14 +1,17 @@
+// Importing necessary libraries and hooks from React
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+// Importing icons from react-icons
 import { FiShoppingCart, FiUser, FiLogOut, FiLogIn } from "react-icons/fi";
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
+// Importing toast for notifications
 import { toast } from "react-toastify";
+// Importing necessary hooks and functions from Redux
+import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/userApiSlice";
 import { logout } from "../slices/userSlice";
 
 function Header() {
-  // The default state is false when the screen resolution is small then the state is set to True which will render the isMobileMenuOpen code when clicked shows the content
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -115,9 +118,7 @@ function Header() {
 
   return (
     <nav className="bg-gray-800 p-5">
-      {/* Parent div for logo, search and cart which is also the deafult isMobileMenuOpen state*/}
       <div className="flex items-center justify-between">
-        {/* First child div for logo which also acts as a parent div for search and input*/}
         <div className="flex items-center">
           <Link to="/" className="text-white text-2xl font-bold">
             E-Com
@@ -136,7 +137,6 @@ function Header() {
             Search
           </button>
         </div>
-        {/* Second child div for cart */}
         <div className="hidden sm:flex items-center space-x-4">
           <Link to="/cart" className="text-white flex items-center">
             <FiShoppingCart className="mr-1" />
@@ -154,10 +154,8 @@ function Header() {
           )}
           {!userInfo && renderSignInButton()}
         </div>
-        {/* Third child div for button visible only in mobile resolution and when clicked will render the below code and changing the state to TRUE*/}
         <div className="sm:hidden">
           <button
-            // on click the useState changes from False to True thus showing the button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-white text-xl focus:outline-none"
           >
@@ -165,7 +163,6 @@ function Header() {
           </button>
         </div>
       </div>
-      {/* What should happen when the resolution is small(mobile) i.e isMobileMenuOpen is True render the below code */}
       {isMobileMenuOpen && (
         <div className="mt-4 sm:hidden">
           <input
