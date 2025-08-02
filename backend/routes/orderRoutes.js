@@ -1,6 +1,4 @@
 import express from "express";
-import { protect, admin } from "../middleware/authMiddleware.js";
-
 import {
   addOrderItems,
   getUserOrders,
@@ -8,11 +6,21 @@ import {
   getOrders,
   updateOrderToDelivered,
 } from "../controllers/orderController.js";
+
+// protect and admin act as middleware for order routes
+import { protect, admin } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
-router.route("/").post(protect, addOrderItems).get(protect, admin, getOrders);
-router.route("/user-orders").get(protect, getUserOrders);
-router.route("/:id").get(protect, getOrderById);
-router.route("/deliver/:id").patch(protect, admin, updateOrderToDelivered);
+// ********* User order routes *****************
+
+router.post("/", protect, addOrderItems);
+router.get("/user-orders", protect, getUserOrders);
+router.get("/:id", protect, getOrderById);
+
+// ********* Admin order routes *****************
+
+router.get("/", protect, admin, getOrders);
+router.patch("/deliver/:id", protect, admin, updateOrderToDelivered);
 
 export default router;
