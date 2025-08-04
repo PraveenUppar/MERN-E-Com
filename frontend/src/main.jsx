@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -30,9 +29,16 @@ import OrderListPage from "./pages/admin/OrderListPage.jsx";
 import ProductEditPage from "./pages/admin/ProductEditPage.jsx";
 import UserEditPage from "./pages/admin/UserEditPage.jsx";
 
+// createBrowserRouter and createRoutesFromElements are functions from React Router, a library that handles navigation in your app.
+//
+
 const router = createBrowserRouter(
   createRoutesFromElements(
+    // The Route component defines a route in your application.
+    // The path prop specifies the URL path for the route, and the element prop specifies the component to render when that path is matched.
+    // The App component is the root component of application
     <Route path="/" element={<App />}>
+      {/* index={true} indicates that this is the default route when the path is exactly "/" */}
       <Route index={true} path="/" element={<HomePage />} />
       <Route path="/product/:id" element={<ProductPage />} />
       <Route path="/search/:keyword" element={<HomePage />} />
@@ -61,6 +67,7 @@ const router = createBrowserRouter(
   )
 );
 
+// ReactDOM acts as a bridge between React's virtual DOM and the actual browser DOM, allowing React components to be rendered and manipulated within a web page.
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <RouterProvider router={router} />
