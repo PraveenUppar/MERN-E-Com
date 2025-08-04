@@ -27,7 +27,7 @@ function Header() {
   const [keyword, setKeyword] = useState(urlKeyword || "");
 
   // The cartItems are destructed from the useSelector() method -- it fetched the items from the redux store by specifying the state ((state) => state.cart)
-  // Process of fetching -->
+  // cartItems --> useSelector --> redux store --> redux cartSlice --> addCart reducer --> Fetch the state --> cartItems
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
 
@@ -42,7 +42,7 @@ function Header() {
   const handleLogout = async () => {
     try {
       await logoutApi().unwrap();
-      dispatch(logout());
+      dispatch(logout()); // state.userInfo = null;
       navigate("/login");
       toast.success("logged Out Successfully");
     } catch (error) {
@@ -54,7 +54,7 @@ function Header() {
     return (
       <>
         <button
-          onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+          onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)} // on click the isProfileMenuOpen is set to True
           className="text-white flex items-center"
         >
           <FiUser className="mr-1" />
@@ -86,7 +86,7 @@ function Header() {
     return (
       <>
         <button
-          onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
+          onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)} // on click the isProfileMenuOpen is set to True
           className="text-white flex items-center"
         >
           <FiUser className="mr-1" />
@@ -111,7 +111,6 @@ function Header() {
       </>
     );
   };
-
   const renderSignInButton = () => (
     <Link className="flex items-center" to="/login">
       <FiLogIn className="mr-1 text-white" />
@@ -165,6 +164,8 @@ function Header() {
               {/* The cart item number is fetched from redux store and rendered here by useSelector method */}
               {cartItems.length}
             </span>
+            {/* UserInfor is fetched from the redux useSelcector from the redux store which contains userSlice */}
+            {/* decide which buttons to show on the screen based on whether a user is logged in and if they have administrator privileges. */}
           </Link>
           {userInfo && (
             <div className="relative group">{renderProfileButton()}</div>
@@ -172,8 +173,10 @@ function Header() {
           {userInfo?.isAdmin && (
             <div className="relative group ">{renderAdminButton()}</div>
           )}
+          {/* There is no userInfo then render sign in button which will navigate to login button */}
           {!userInfo && renderSignInButton()}
         </div>
+        {/* Check Mobile resolution meaning the code will be hidden if the scrrn resolution is not small */}
         <div className="sm:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -183,6 +186,7 @@ function Header() {
           </button>
         </div>
       </div>
+      {/* if the isMobileMenuOpen is true then the code below is rendered */}
       {isMobileMenuOpen && (
         <div className="mt-4 sm:hidden">
           <input
@@ -201,6 +205,7 @@ function Header() {
                 {cartItems.length}
               </span>
             </Link>
+
             {userInfo && (
               <div className="relative group ">{renderProfileButton()}</div>
             )}
