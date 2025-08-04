@@ -29,12 +29,8 @@ import OrderListPage from "./pages/admin/OrderListPage.jsx";
 import ProductEditPage from "./pages/admin/ProductEditPage.jsx";
 import UserEditPage from "./pages/admin/UserEditPage.jsx";
 
-// createBrowserRouter and createRoutesFromElements are functions from React Router, a library that handles navigation in your app.
-//
-
 const router = createBrowserRouter(
   createRoutesFromElements(
-    // The Route component defines a route in your application.
     // The path prop specifies the URL path for the route, and the element prop specifies the component to render when that path is matched.
     // The App component is the root component of application
     <Route path="/" element={<App />}>

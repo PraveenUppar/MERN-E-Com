@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
-// It will take the product as parameter from the home page which contains the data from the product data and renders it
-
+// Takes products as the parameter and render its properties
 export default function Product({ product }) {
   return (
     <Link to={`/product/${product._id}`}>

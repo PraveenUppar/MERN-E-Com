@@ -8,17 +8,20 @@ const initialState = {
     : null,
 };
 
-//
+// It stores the user information in the local storage and handles its expiration.
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    // reducer to store the user info in the local storage with expiration time
+    //  It stores the user's information in your application's state and also saves it to the browser's local storage so that the user stays logged in
     setCredentials: (state, action) => {
       state.userInfo = action.payload;
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
-      const expirationTime = Date.now() + 30 * 24 * 60 * 60 * 1000; // 30 days
+      const expirationTime = Date.now() + 3 * 24 * 60 * 60 * 1000; // 3 days
       localStorage.setItem("expirationTime", expirationTime);
     },
+    // logout reducer
     logout: (state) => {
       state.userInfo = null;
       localStorage.removeItem("userInfo");
@@ -28,5 +31,4 @@ const userSlice = createSlice({
 });
 
 export const { setCredentials, logout } = userSlice.actions;
-
 export default userSlice.reducer;

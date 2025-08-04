@@ -33,7 +33,7 @@ router.get("/google", async (req, res) => {
   }
 });
 
-//register or login user to DB
+//
 router.get("/login/success", async (req, res) => {
   if (req.user) {
     const userExists = await User.findOne({ email: req.user._json.email });
