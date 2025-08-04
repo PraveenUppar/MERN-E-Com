@@ -12,7 +12,7 @@ const store = configureStore({
     // integrate the RTK Query API slice into the store.
     [apiSlice.reducerPath]: apiSlice.reducer,
     // This part of the state will be managed by the cartSlice and userSlice
-    cart: cartReducer,
+    cart: cartReducer, // This means that all the state related to the cart will be stored under store.cart.
     user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>

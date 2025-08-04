@@ -26,6 +26,8 @@ function Header() {
   const { keyword: urlKeyword } = useParams();
   const [keyword, setKeyword] = useState(urlKeyword || "");
 
+  // The cartItems are destructed from the useSelector() method -- it fetched the items from the redux store by specifying the state ((state) => state.cart)
+  // Process of fetching -->
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
 
@@ -36,7 +38,7 @@ function Header() {
 
   //
   const [logoutApi] = useLogoutMutation();
-  //
+
   const handleLogout = async () => {
     try {
       await logoutApi().unwrap();
@@ -117,10 +119,12 @@ function Header() {
     </Link>
   );
 
+  // on click the function is called it will take the value(which is the keyword) from the search input
   const handleSearch = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // if the page reloads the value is not lost
+    // if the keyword is present then navigate or else return to home page
     if (keyword) {
-      navigate(`/search/${keyword.trim()}`);
+      navigate(`/search/${keyword.trim()}`); // .trim() method is used here to remove any leading or trailing whitespace
       setKeyword("");
     } else {
       navigate("/");
@@ -130,17 +134,21 @@ function Header() {
   return (
     <nav className="bg-gray-800 p-5">
       <div className="flex items-center justify-between">
+        {/* logo + search bar + search button */}
         <div className="flex items-center">
+          {/* Logo */}
           <Link to="/" className="text-white text-2xl font-bold">
             E-Com
           </Link>
+          {/* Search input */}
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search products"
             className="ml-4 p-2 rounded-md bg-gray-700 text-white hidden sm:block"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
+          {/* Search button */}
           <button
             className="bg-blue-500 text-white py-2 px-4 rounded-md hidden sm:block ml-2"
             onClick={handleSearch}
@@ -148,15 +156,16 @@ function Header() {
             Search
           </button>
         </div>
+        {/* icons for cart and number of items in it */}
         <div className="hidden sm:flex items-center space-x-4">
           <Link to="/cart" className="text-white flex items-center">
             <FiShoppingCart className="mr-1" />
             Cart
             <span className="bg-blue-500 text-white rounded-full px-3 py-1 ml-2">
+              {/* The cart item number is fetched from redux store and rendered here by useSelector method */}
               {cartItems.length}
             </span>
           </Link>
-
           {userInfo && (
             <div className="relative group">{renderProfileButton()}</div>
           )}
