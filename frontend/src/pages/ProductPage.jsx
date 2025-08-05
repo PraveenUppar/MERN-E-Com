@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 import {
-  useCreateProductMutation,
   useCreateReviewMutation,
   useGetProductDetailsQuery,
 } from "../slices/productsApiSlice";
@@ -9,18 +8,22 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+//  handle the logic for adding an item to the shopping cart.
 import { addToCart } from "../slices/cartSlice";
 
-export default function ProductScreen() {
+export default function ProductPage() {
+  // Extract product ID from URL parameters and use the custom hook to fetch product details
   const { id: productId } = useParams();
+  // Use the query hook to fetch product details and manage loading state, error handling, and refetching
   const {
     data: product,
     isLoading,
     error,
     refetch,
   } = useGetProductDetailsQuery(productId);
-  const [createReview, { isLoading: LoadingCreateReview }] =
-    useCreateReviewMutation();
+  // Use the mutation hook to create a review and manage loading state for the review creation process
+  const [createReview] = useCreateReviewMutation();
+  // Local state for quantity, user comment, and user rating
   const [qty, setQty] = useState(1);
   const [userComment, setUserComment] = useState("");
   const [userRating, setUserRating] = useState(5);
@@ -28,11 +31,16 @@ export default function ProductScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Handler function to add the product to the cart
+  // It dispatches the addToCart action with the product details and selected quantity
   const addtoCartHandler = () => {
+    // dispatch the addToCart action with the product and selected quantity
     dispatch(addToCart({ ...product, qty }));
     navigate("/cart");
   };
 
+  // Handler function to create a review
+  // It prevents the default form submission, calls the createReview mutation with the product ID,
   const handleCreateReview = async (e) => {
     e.preventDefault();
     try {
@@ -91,6 +99,7 @@ export default function ProductScreen() {
                 className="bg-white border border-gray-300 p-2 rounded-md mt-2"
                 onChange={(e) => setQty(e.target.value)}
               >
+                {/* Create an array of options for the quantity select input */}
                 {[...Array(product.countInStock).keys()].map((num) => (
                   <option key={num + 1} value={num + 1}>
                     {num + 1}
@@ -111,6 +120,7 @@ export default function ProductScreen() {
         <h2 className="text-xl font-semibold">Customer Reviews</h2>
         <div className="mt-4">
           <ul>
+            {/* Map through the reviews and display each one */}
             {product?.reviews?.map((review, i) => (
               <div
                 key={i}
