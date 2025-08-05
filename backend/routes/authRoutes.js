@@ -1,14 +1,24 @@
 import express from "express";
 import passport from "passport";
 import axios from "axios";
+
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
+
 import dotenv from "dotenv";
 dotenv.config();
 
 const router = express.Router();
 
-//authenticate the user using google
+// This route initiates the Google OAuth flow by redirecting the user to Google's authentication page
+// It uses the query parameters to specify the client ID, redirect URI, and other OAuth parameters
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+// This route handles the callback from Google after the user has authenticated
+// It uses Passport.js to authenticate the user with the Google strategy
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -17,37 +27,26 @@ router.get(
   })
 );
 
-//forward the request to goggle's authentication server
-router.get("/google", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://accounts.google.com/o/oauth2/v2/auth",
-      {
-        params: req.query,
-      }
-    );
-    res.send(response);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-//
+// Handle successful login
+// This route is called after successful authentication with Google
 router.get("/login/success", async (req, res) => {
   if (req.user) {
+    // Check if the user exists in the database
     const userExists = await User.findOne({ email: req.user._json.email });
+    // If user exists, generate a token and send it back
     if (userExists) {
       generateToken(res, userExists._id);
     } else {
+      // If user does not exist, create a new user and generate a token
       const newUser = new User({
         name: req.user._json.name,
         email: req.user._json.email,
-        password: Date.now(), //dummy password
+        password: Date.now(),
       });
       generateToken(res, newUser._id);
       await newUser.save();
     }
+    //
     res.status(200).json({
       user: { ...req.user, isAdmin: userExists.isAdmin },
       message: "Succesfully logged in",
@@ -60,13 +59,13 @@ router.get("/login/success", async (req, res) => {
   }
 });
 
-//login failed
+// login failed
 router.get("/login/failed", (req, res) => {
   res.status(401);
   throw new Error("Login Failed");
 });
 
-//logout
+// logout route
 router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {

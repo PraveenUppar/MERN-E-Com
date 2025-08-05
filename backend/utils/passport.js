@@ -1,7 +1,11 @@
+// Utility function that configures and initializes Passport.js for your Express application
+
+// sets up a session middleware to store user data between requests.
 import session from "express-session";
 import passport from "passport";
 import { Strategy as GoogleStategy } from "passport-google-oauth20";
 
+// This function configures Passport.js with Google OAuth strategy and sets up session management for user authentication.
 const passportUtil = (app) => {
   app.use(
     session({
@@ -13,8 +17,9 @@ const passportUtil = (app) => {
       },
     })
   );
+  // Initialize Passport and restore authentication state, if any, from the session.
   app.use(passport.initialize());
-  app.use(passport.session());
+  app.use(passport.session()); // enable persistent login sessions.
 
   passport.use(
     new GoogleStategy(
@@ -29,10 +34,12 @@ const passportUtil = (app) => {
       }
     )
   );
+
+  // serializeUser: This determines what data from the user object should be stored in the session
   passport.serializeUser((user, done) => {
     done(null, user);
   });
-
+  //  This function is called on every subsequent request to retrieve the user object from the session.
   passport.deserializeUser((user, done) => {
     done(null, user);
   });

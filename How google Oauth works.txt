@@ -1,0 +1,34 @@
+Step 1: The User Clicks "Log In with Google"
+
+- User Action: Alex is on your application's front end and clicks a button that says "Log In with Google."
+- Front End Action: This button triggers a request to a route in your backend, something like /auth/google.
+- Your Backend's Role: Your backend, which has been configured with passport.use(new GoogleStrategy(...)), receives this request. 
+  Passport takes over and redirects Alex's browser to a special URL on Google's authentication server.
+
+Step 2: Google Asks for Permission
+
+- User Action: Alex is now on a Google-branded page. This page asks them to sign in to their Google account if they aren't already, and then it asks for their permission to share their "profile" and "email" with your application.
+- Google's Role: Google uses the clientID, clientSecret, and scope from your GoogleStrategy to generate this page. It knows which app is asking for access and what information it wants.
+- User Action: Alex clicks "Allow" or "Continue" to give your app permission.
+
+Step 3: Google Redirects Back to Your Application
+
+- Google's Role: After Alex grants permission, Google securely generates a special code. It then redirects Alex's browser back to the callbackURL you specified in your code: /auth/google/callback. It includes the code in the URL.
+- Your Backend's Role: Your backend receives this request at /auth/google/callback. Passport's middleware recognizes this is the callback from Google. 
+  It uses the code provided by Google and your clientID and clientSecret to make a direct, secure request to Google's server to exchange the code for an access token and Alex's user profile information.
+
+Step 4: Your Application Creates or Finds the User
+
+- Your Backend's Role: Passport now has Alex's profile information. It has also used your serializeUser function to store this profile in the session.
+- Your Backend's Code: Passport then redirects Alex's browser to the /login/success route, which is where your other code snippet comes in!
+
+Step 5: The User Is Logged In
+
+- Your Backend's Role: Your server sends a success response back to Alex's browser. This response might include a JSON object with user details and a token.
+- Front End's Role: The front end receives this JSON response and can now store the token and user information. 
+  Alex's browser also has a session cookie from your server, which will allow passport.session() and deserializeUser to recognize them on future requests.
+- User's Action: Alex is now logged into your application and can start using it as an authenticated user.
+
+
+
+
