@@ -44,6 +44,7 @@ const cartSlice = createSlice({
       state.shippingAddress = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
     },
+    // takes the data sent (action.payload) and updates the savePaymentMethod property and stores it in local storage
     savePaymentMethod: (state, action) => {
       state.paymentMethod = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));

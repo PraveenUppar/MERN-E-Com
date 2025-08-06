@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { savePaymentMethod } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 export default function PaymentScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // useState for payment selection
   const [selectedPayment, setSelectedPayment] = useState("");
 
+  // handleContinue function
+  // it sends payment type as payload to the savePaymentMethod to store it in local storage
   const handleContinue = () => {
     dispatch(savePaymentMethod(selectedPayment));
     navigate("/place-order");
