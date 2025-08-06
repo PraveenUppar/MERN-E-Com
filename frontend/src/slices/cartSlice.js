@@ -31,8 +31,11 @@ const cartSlice = createSlice({
       // passes the new state to the updateCart function
       return updateCart(state);
     },
+    // Handle the logic of removing product from the cart
     removeFromCart: (state, action) => {
+      // Takes product Id as the action payload
       const id = action.payload;
+      // Filters out the item with the given id from the cartItems array ans returns the updated cart
       state.cartItems = state.cartItems.filter((item) => item._id !== id);
       return updateCart(state);
     },
