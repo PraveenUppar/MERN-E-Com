@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "../slices/cartSlice";
 
-export default function ShippingScreen() {
+export default function ShippingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // useSelector lets extract data from your global Redux store
+  // select the cart state from the redux store
   const cart = useSelector((state) => state.cart);
+  // extract the shippingAddress from the cart state
   const { shippingAddress } = cart;
+  // If the cart state has shippingAddress present then it will update the state with it else it will set the address form the user input
   const [address, setAddress] = useState(shippingAddress?.address || "");
   const [city, setCity] = useState(shippingAddress?.city || "");
   const [postalCode, setPostalCode] = useState(
@@ -16,8 +21,10 @@ export default function ShippingScreen() {
   );
   const [country, setCountry] = useState(shippingAddress?.country || "");
 
+  // handleSubmit function
   const handleSubmit = (e) => {
     e.preventDefault();
+    // dispatches the data{ address, city, postalCode, country } to the saveShippingAddress cart slice to the redux to update and store in local storage
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     navigate("/payment");
   };

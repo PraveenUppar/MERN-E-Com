@@ -10,7 +10,7 @@ const initialState = localStorage.getItem("cart")
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState, // will be zero
+  initialState,
   reducers: {
     //  handle the logic for adding an item to the shopping cart.
     addToCart: (state, action) => {
@@ -39,6 +39,7 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter((item) => item._id !== id);
       return updateCart(state);
     },
+    // takes the data sent (action.payload) and updates the shippingAddress property and stores it in local storage
     saveShippingAddress: (state, action) => {
       state.shippingAddress = action.payload;
       localStorage.setItem("cart", JSON.stringify(state));
