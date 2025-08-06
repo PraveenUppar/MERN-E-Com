@@ -64,6 +64,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     updateUser: builder.mutation({
+      // updateUser data (name,email and password) it will put it in body and send a put request to the backend
       query: (user) => ({
         url: `${USERS_URL}/${user.id}`,
         method: "PUT",
