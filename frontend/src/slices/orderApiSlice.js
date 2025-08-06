@@ -4,6 +4,7 @@ import { BACKEND_URL, ORDERS_URL } from "../constants";
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createOrder: builder.mutation({
+      // order data (cartItems, paymentMethod,temsPrice,shippingPrice,taxPrice,totalPrice,) as an parameters it will put it in body and send a post request to the backend
       query: (order) => ({
         url: ORDERS_URL,
         method: "POST",

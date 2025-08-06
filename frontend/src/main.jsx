@@ -43,6 +43,7 @@ const router = createBrowserRouter(
       <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
       <Route path="/register" element={<RegisterPage />} />
       {/*Private Routes*/}
+      {/* Protected route checks if the userInfo is stord in local storage if true then renders the outlet component else redirect to login page */}
       <Route path="" element={<PrivateRoute />}>
         <Route path="/shipping" element={<ShippingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
