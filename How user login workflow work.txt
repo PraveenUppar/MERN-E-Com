@@ -1,0 +1,9 @@
+ summary of the flow:
+
+- A user submits a login form, which triggers the handleLogin function.
+- handleLogin calls the login mutation function (from the RTK Query hook).
+- The mutation function uses the login endpoint definition to send a POST request to your server's /api/users/login endpoint with the user's data.
+- The server processes the request and sends back a response, hopefully with the user's details.
+- If the response is successful, the handleLogin function dispatches the setCredentials action.
+- The setCredentials reducer function then updates the Redux state with the user's info and also saves the info (and an expiration time) to local storage.
+- Finally, the user is redirected to the home page, and a success message is shown.
