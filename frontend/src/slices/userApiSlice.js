@@ -8,7 +8,7 @@ import { USERS_URL } from "../constants";
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      // login data (email and password) as an argument.
+      // login data (email and password) as an argument it will put it in body and send a post request to the backend
       query: (data) => ({
         url: " /api/users/login",
         method: "POST",
@@ -36,6 +36,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     resetPassword: builder.mutation({
+      // resetPassword data (resettoken and new password) it will put it in body and send a patch request to the backend
       query: (data) => ({
         url: `${USERS_URL}/reset-password/${data.resetToken}`,
         method: "PATCH",
