@@ -45,7 +45,7 @@ export default function LoginPage() {
     }
   };
 
-  // handleGoogleAuth function is called when the user clicks on the "Sign in with Google" button
+  // handleGoogleAuth function
   // It redirects the user to the Google authentication endpoint
   const handleGoogleAuth = () => {
     try {

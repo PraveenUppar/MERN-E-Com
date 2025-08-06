@@ -22,6 +22,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     register: builder.mutation({
+      // register data (name, email, and password) as an argument it will put it in body and send a post request to the backend
       query: (data) => ({
         url: `${USERS_URL}/register`,
         method: "POST",

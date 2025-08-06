@@ -22,7 +22,7 @@ export default function ResetPassword() {
     if (password !== confirmPassword) {
       alert("Passwords do not match");
     } else {
-      // it sends reset token and the new password as arguments to the frontend redux hook
+      // it sends reset token and the new password as arguments to the frontend redux hook query useResetPasswordMutation --> resetPassword
       try {
         await resetPassword({ resetToken, password }).unwrap();
         toast.success("Password Reset Successfully");
