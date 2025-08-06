@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeFromCart } from "../slices/cartSlice";
 
-export default function CartScreen() {
+export default function CartPage() {
   // useSelector is used to access the Redux store state
   const { cartItems, taxPrice, shippingPrice, totalPrice, itemsPrice } =
     useSelector((state) => state.cart);
