@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearCartItems } from "../slices/cartSlice";
 import { useCreateOrderMutation } from "../slices/orderApiSlice";
 
-export default function PlaceOrderScreen() {
+export default function PlaceOrderPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

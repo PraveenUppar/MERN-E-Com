@@ -12,6 +12,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getOrderDetails: builder.query({
+      // It takes order id as parametere and redirects to order details
       query: (id) => ({
         url: `${ORDERS_URL}/${id}`,
       }),
@@ -30,6 +31,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     payWithStripe: builder.mutation({
+      // It takes order items as parametere and put it in a body and send to the backend as a post request
       query: (orderItems) => ({
         url: `${BACKEND_URL}/create-checkout-session`,
         method: "POST",
@@ -37,6 +39,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     deliverOrder: builder.mutation({
+      //Takes the order ID as parameres and sends a patch request to the backend
       query: (orderId) => ({
         url: `${ORDERS_URL}/deliver/${orderId}`,
         method: "PATCH",
