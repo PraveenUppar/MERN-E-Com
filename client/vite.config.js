@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      "/api": "https://mern-e-com-w18b.onrender.com/",
+      "/api": "http://localhost:5000",
     },
   },
 });
