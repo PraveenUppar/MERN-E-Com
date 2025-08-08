@@ -24,25 +24,17 @@ app.use(cookieParser());
 // This middleware sets the Access-Control-Allow-Origin header to allow requests from http://localhost:3000.
 // This is necessary for CORS (Cross-Origin Resource Sharing) to allow the frontend application (3000) to communicate with the backend server running on a different port (5000).
 app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://mern-e-com-liard.vercel.app/"
-  );
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   next();
 });
 
 // This allows the server to accept requests from different origins, which is useful for development when the frontend(3000) and backend(5000) are on different ports.
 // By default, web browsers have a security policy called the Same-Origin Policy.
-app.use(cors());
 // This middleware sets the Access-Control-Allow-Credentials header to true, allowing cookies to be sent with requests from the frontend to the backend.
 // This is necessary for authentication and session management.This is used to allow the frontend to make requests to the backend with credentials (like cookies).
 app.use(
   cors({
-    origin: [
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
-      "https://mern-e-com-liard.vercel.app/",
-    ],
+    origin: ["http://localhost:3000"],
     methods: "GET, POST, PATCH, DELETE, PUT",
     credentials: true,
   })
