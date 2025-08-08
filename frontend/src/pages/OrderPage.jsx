@@ -12,18 +12,10 @@ import {
 export default function OrderPage() {
   // Parse the order ID from the order/order_id
   const { id: orderId } = useParams();
+
   // useSelector lets extract data from your global Redux store
   // select the user state from the redux store
   const { userInfo } = useSelector((state) => state.user);
-  // extract the details needed from the order to send it as parameter to the redux query
-  const {
-    shippingAddress,
-    user,
-    isDelivered,
-    orderItems,
-    shippingPrice,
-    taxPrice,
-  } = order;
 
   // send order id as paramter to the useGetOrderDetailsQuery to get the order detials
   const {
@@ -49,6 +41,16 @@ export default function OrderPage() {
   if (isLoading) {
     return <Spinner />;
   }
+
+  // extract the details needed from the order to send it as parameter to the redux query
+  const {
+    shippingAddress,
+    user,
+    isDelivered,
+    orderItems,
+    shippingPrice,
+    taxPrice,
+  } = order;
 
   // calculateTotal function sum of all the total items in the order
   const calculateTotal = (orderItems) => {

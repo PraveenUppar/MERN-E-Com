@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 // The crypto module provides a wide range of cryptographic functionality, including hashing, encryption.
 import crypto from "crypto";
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,

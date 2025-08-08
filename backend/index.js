@@ -41,6 +41,14 @@ app.use(
   })
 );
 
+// The passport middleware is used for authentication in the application. It is used for Google Oauth authentication (the logic is implemented in the passport.js file).
+import passport from "./utils/passport.js";
+passport(app);
+
+// The stripe middlware is used for payments through stripe
+import stripe from "./utils/stripe.js";
+stripe(app);
+
 // Testing the server is running
 app.get("/", (res) => {
   res.send("Server is running");
@@ -61,14 +69,6 @@ app.use("/auth", authRoutes);
 // Orders routes for products ordered and etc
 import orderRoutes from "./routes/orderRoutes.js";
 app.use("/api/orders", orderRoutes);
-
-// The passport middleware is used for authentication in the application. It is used for Google Oauth authentication (the logic is implemented in the passport.js file).
-import passport from "./utils/passport.js";
-passport(app);
-
-// The stripe middlware is used for payments through stripe
-import stripe from "./utils/stripe.js";
-stripe(app);
 
 // app.use(notFound);
 // app.use(errorHandler);

@@ -114,7 +114,7 @@ function Header() {
   const renderSignInButton = () => (
     <Link className="flex items-center" to="/login">
       <FiLogIn className="mr-1 text-white" />
-      <button className="text-white">Sign In</button>
+      <button className="text-white cursor-pointer">Sign In</button>
     </Link>
   );
 

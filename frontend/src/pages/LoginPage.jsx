@@ -72,6 +72,14 @@ export default function LoginPage() {
   // It retrieves the userInfo from the user slice of the Redux store
   const { userInfo } = useSelector((state) => state.user);
 
+  // useLocation is used to get the current location object, which contains information about the URL
+  // This is useful for handling redirects after login
+  const { search } = useLocation();
+  // URLSearchParams is used to parse the query string from the URL
+  // It allows you to easily access the parameters in the query string
+  const sp = new URLSearchParams(search);
+  const redirect = sp.get("redirect") || "/";
+
   //Imagine a user is already logged in. Without this useEffect hook, if they manually type /login into their browser's address bar, they would see the login form again, which is bad user experience.
   // This code ensures that any logged-in user who tries to access a restricted page like the login screen is immediately redirected to a more appropriate page,
 
@@ -82,14 +90,6 @@ export default function LoginPage() {
       navigate(redirect);
     }
   }, [navigate, redirect, userInfo]);
-
-  // useLocation is used to get the current location object, which contains information about the URL
-  // This is useful for handling redirects after login
-  const { search } = useLocation();
-  // URLSearchParams is used to parse the query string from the URL
-  // It allows you to easily access the parameters in the query string
-  const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/";
 
   return (
     <div className="container mx-auto mt-8 mb-28 p-4 max-w-md ">

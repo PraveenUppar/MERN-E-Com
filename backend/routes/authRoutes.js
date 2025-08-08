@@ -1,6 +1,5 @@
 import express from "express";
 import passport from "passport";
-import axios from "axios";
 
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
