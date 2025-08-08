@@ -1,33 +1,63 @@
-E-Com MERN
+# E-Com MERN
 
-It is not another clone
+This is a full-stack e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js).
+It provides a robust foundation for an online store, featuring user and product management, and secure authentication.
 
-i have used mvc model for backend
-react for frontend tailwind css
-for backedn i have used express node js
-"axios": "^1.11.0",
-"bcryptjs": "^3.0.2",
-"cookie-parser": "^1.4.7",
-"cors": "^2.8.5",
-"crypto": "^1.0.1",
-"dotenv": "^17.2.1",
-"express": "^5.1.0",
-"express-async-handler": "^1.2.0",
-"express-session": "^1.18.2",
-"jsonwebtoken": "^9.0.2",
-"mongoose": "^8.16.5",
-"nodemailer": "^7.0.5",
-"nodemon": "^3.1.10",
-"passport": "^0.7.0",
-"passport-google-oauth20": "^2.0.0",
-"stripe": "^18.4.0"
+## Description
 
-    i haved implemented aouth adn reset password which were a big channellege itself
+This project is a complete e-commerce solution, built with a focus on clean architecture and scalable features.
+The backend is structured using the MVC (Model-View-Controller) pattern with Node.js and Express.js. The frontend is a dynamic single-page application built with React and styled using Tailwind CSS, with Redux for state management.
+Key features include robust authentication, a secure password reset mechanism, and support for both user and administrator roles. All persistent data is managed in a MongoDB database.
 
-    it has both user and admin
+## DataBase design
 
-    fro frontened i have used redux for state magement and for data base i have monogo db
+![Alt text](DBdesign.png)
 
-DB design
+## Environment Variables
 
-db design.png
+```
+PORT = 5000
+NODE_ENV = development
+MONGODB_URI = "your_mongo_db_URL"
+
+
+JWT_SECRET = your_jwt_secret_token
+SESSION_SECRET = your_session_token
+CLIENT_URL = http://localhost:3000
+
+GOOGLE_CLIENT_ID = your_google_client_id
+GOOGLE_CLIENT_SECRET = your_google_client_secret
+
+
+STRIPE_SECRET_KEY = your-stripe-secret-key
+PAGINATION_LIMIT = 8
+
+EMAIL_HOST = sandbox.smtp.mailtrap.io
+EMAIL_PORT = your_port_num
+EMAIL_USERNAME = your_nodemailer_email_username
+EMAIL_PASSWORD = your_nodemailer_email_password
+```
+
+## Installing and Running
+
+```
+git clone https://github.com/PraveenUppar/MERN-E-Com.git
+```
+
+```
+cd backend
+```
+
+```
+npm install
+npm run dev
+```
+
+```
+cd frontend
+```
+
+```
+npm install
+npm run dev
+```
