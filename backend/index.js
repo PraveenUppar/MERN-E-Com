@@ -52,6 +52,7 @@ stripe(app);
 // Testing the server is running
 app.get("/", (res) => {
   res.send("Server is running");
+  res.json("E Com Server is running");
 });
 
 // Products api routes
