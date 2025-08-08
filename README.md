@@ -1,17 +1,48 @@
 # E-Com MERN
 
-This is a full-stack e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js).
+This is a full-stack e-commerce platform built with the MERN stack (MongoDB, Express.js, React, Node.js). 
 It provides a robust foundation for an online store, featuring user and product management, and secure authentication.
+
+## Table of Content
+1. [Description](#description)
+2. [Features](#features)
+3. [Screenshots](#screenshots)
+4. [Database design](#database-design)
+5. [Environment Variables](#environment-variables)
+6. [Installing and Running](#installing-and-running)
 
 ## Description
 
-This project is a complete e-commerce solution, built with a focus on clean architecture and scalable features.
-The backend is structured using the MVC (Model-View-Controller) pattern with Node.js and Express.js. The frontend is a dynamic single-page application built with React and styled using Tailwind CSS, with Redux for state management.
+This project is a complete e-commerce solution, built with a focus on clean architecture and scalable features. 
+The backend is structured using the MVC (Model-View-Controller) pattern with Node.js and Express.js. The frontend is a dynamic single-page application built with React and styled using Tailwind CSS, with Redux for state management. 
 Key features include robust authentication, a secure password reset mechanism, and support for both user and administrator roles. All persistent data is managed in a MongoDB database.
 
-## DataBase design
+## Features
+-   **User Authentication**: Secure user registration, login, and password reset.
+-   **Role-Based Access Control**: Separate permissions for regular users and administrators.
+-   **Product Management**: Admin panel to add, edit, and delete products.
+-   **Shopping Cart**: Functionality to add items to a cart before checkout.
+-   **Stripe Integration**: Secure payment processing for orders.
+-   **Order Tracking**: Users can view their order history and status.
+-   **Responsive Design**: A user-friendly interface that works on all devices.
 
-![Alt text](DBdesign.png)
+## Screenshots
+
+#### _<div align="left"><sub></sub></div>_
+
+|                    Homepage                     |                      Registerpage                       |                    Loginpage                     |
+| :---------------------------------------------: | :------------------------------------------------------: | :----------------------------------------------: |
+| ![homepage](./images/homepage.png) | ![registerpage](./images/registerpage.png) | ![loginpage](./images/loginpage.png) |
+
+|                   Orderpage                    |                    Adminpage                    |                  Deliverypage                   |
+| :------------------------------------------: | :----------------------------------------: | :--------------------------------------: |
+| ![orderpage](./images/orderpage.png) | ![adminpage](./images/adminpage.png) | ![deliverypage](./images/deliverypage.png) |
+
+
+## DataBase design
+<p >
+  <img src="./images/DBdesign.png" alt="Database Design" width="70%" />
+</p>
 
 ## Environment Variables
 
@@ -43,21 +74,18 @@ EMAIL_PASSWORD = your_nodemailer_email_password
 ```
 git clone https://github.com/PraveenUppar/MERN-E-Com.git
 ```
-
 ```
-cd backend
+cd server
 ```
-
+```
+npm install
+npm run dev
+```
+```
+cd client
+```
 ```
 npm install
 npm run dev
 ```
 
-```
-cd frontend
-```
-
-```
-npm install
-npm run dev
-```
