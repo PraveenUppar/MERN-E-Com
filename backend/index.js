@@ -50,8 +50,7 @@ import stripe from "./utils/stripe.js";
 stripe(app);
 
 // Testing the server is running
-app.get("/", (res) => {
-  // res.send("Server is running");
+app.get("/", (req, res) => {
   res.json("E Com Server is running");
 });
 
