@@ -35,7 +35,11 @@ app.use(cors());
 // This is necessary for authentication and session management.This is used to allow the frontend to make requests to the backend with credentials (like cookies).
 app.use(
   cors({
-    origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
+    origin: [
+      "http://127.0.0.1:3000",
+      "http://localhost:3000",
+      "https://mern-e-com-chi.vercel.app/",
+    ],
     methods: "GET, POST, PATCH, DELETE, PUT",
     credentials: true,
   })
