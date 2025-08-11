@@ -7,6 +7,7 @@ It provides a robust foundation for an online store, featuring user and product 
 1. [Description](#description)
 2. [Features](#features)
 3. [Screenshots](#screenshots)
+4. [System design](#system-design)
 4. [Database design](#database-design)
 5. [Environment Variables](#environment-variables)
 6. [Installing and Running](#installing-and-running)
@@ -37,6 +38,12 @@ Key features include robust authentication, a secure password reset mechanism, a
 |                   Orderpage                    |                    Adminpage                    |                  Deliverypage                   |
 | :------------------------------------------: | :----------------------------------------: | :--------------------------------------: |
 | ![orderpage](./images/orderpage.png) | ![adminpage](./images/adminpage.png) | ![deliverypage](./images/deliverypage.png) |
+
+
+## System design
+<p >
+  <img src="./images/systemdesign.png" alt="System Design" width="70%" />
+</p>
 
 
 ## DataBase design
